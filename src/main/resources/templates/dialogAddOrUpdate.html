@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+<body>
+<form id="userForm">
+    <div name="addsmongo">
+        <div class="form-group">
+            <label for="name">名称</label>
+            <input type="hidden" class="form-control"   name="id"  th:value="${user?.id}">
+            <input type="text" class="form-control"   name="name"  th:value="${user?.name}" >
+        </div>
+        <div class="form-group">
+            <label for="username">用户名称</label>
+
+            <input type="text" class="form-control"   name="username"  th:value="${user?.username}" >
+        </div>
+
+            <div class="form-group">
+            <label for="sex">年龄</label>
+            <input type="text" name="sex"  class="form-control"  th:value="${user?.sex}"/>
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="text" name="password"  class="form-control" th:value="${user?.password}" />
+        </div>
+        <div class="form-group">
+            <label for="createTime">时间</label>
+            <input class="form-control" id="createTime" name="createTime"  th:value="${#dates.format(user?.createTime,'yyyy-MM-dd')}" onFocus="WdatePicker()" />
+        </div>
+        <div class="form-group">
+            <label for="proImage">图片</label>
+<!--
+            <img  width="50px"  height="50px"  class='img-thumbnail' src='findImgById.do?imgId=${user?.imgId}'>
+-->
+            <input class="form-control" id="book_Img" name="suppImg"  type="file" />
+            <input type="hidden" id="imgId"  name="imgId"  >
+        </div>
+
+    </div>
+
+</form>
+</body>
+<script type="text/javascript">
+
+
+
+    $(function (){
+
+
+        $("#book_Img").fileinput({
+            //上传按钮
+            showUpload:true,
+            //移除按钮
+            showRemove : true,
+            //最大上传文件的个数，想要多选文件，input文件域必须加上multiple这个属性
+            // maxFileCount:2,
+            //主样式
+            mainClass: "input-group-lg",
+            //按钮样式
+            browseClass: "btn btn-primary btn-block",
+            //语言设置：中文
+            language : 'zh',
+            //允许预览的文件类型
+            allowedPreviewTypes : [ 'image', 'text' ],
+            //允许选择的文件后缀名
+            allowedFileExtensions : [ 'jpg', 'png', 'gif'],
+            //最大上传文件的大小（KB）
+            maxFileSize : 2000,
+            //是否显示路径文本框
+            showCaption:true,
+            //是否显示预览
+            showPreview:true,
+            //是否显示关闭预览框
+            showClose:false,
+            //是否显示文件选择按钮
+            showBrowse:true,
+            //文件上传的路径，设置可实现拖拽
+            uploadUrl :'imgUpload.do',
+            validateInitialCount:true,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        });
+
+        //fileuploaded 上传文件之后的方法
+        $('#book_Img').on('fileuploaded', function(event, data, previewId, index) {
+            alert(data.response.imgId);
+            //console.info(data.response.imgId);
+            //图片主键回显到隐藏域
+            $("#imgId").val(data.response.imgId);
+        });
+
+    })
+
+
+
+
+</script>
+</html>

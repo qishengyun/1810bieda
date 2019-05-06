@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 引入easyui样式文件 -->
+    <link type="text/css" rel="stylesheet" href="/jquery-easyui-1.5/themes/default/easyui.css">
+    <!-- 引入easyui图标样式文件 -->
+    <link type="text/css" rel="stylesheet" href="/jquery-easyui-1.5/themes/icon.css">
+    <!-- 引入jquery js文件 -->
+    <script type="text/javascript" src="/jquery-easyui-1.5/jquery.min.js"></script>
+    <!-- 引入easyui的js文件 -->
+    <script type="text/javascript" src="/jquery-easyui-1.5/jquery.easyui.min.js"></script>
+    <!-- 引文easyui支持中文js -->
+    <script type="text/javascript" src="/jquery-easyui-1.5/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/jquery-easyui-1.5/util-js.js"></script>
+
+
+</head>
+<body>
+<div  class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'north',title:'上' " style="height:20% ">
+
+    </div>
+    <div data-options="region:'west', title:'左'" style="width:15%">
+        <div class="easyui-accordion">
+            <div  title="递归树">
+                <ul  id="myTree"></ul>
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'center',title:'中'" >
+        <div  id="myTabs" class="easyui-tabs" data-options="fit:true">
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+
+
+
+
+    $("#myTree").tree({
+        url:'findTreeList2.do',
+        parentField:'pid',
+        lines:true,
+        onClick:function(node){
+            var exists=$("#myTabs").tabs('exists',node.text);
+            if(exists){
+                $("#myTabs").tabs('select',node.text);
+            }else{
+                $("#myTabs").tabs('add',{
+                    title:node.text,
+                    content:createFrame(node.url),
+                    closable:true,
+                    tools:[{
+                        iconCls:'icon-mini-refresh',
+                        handler:function(){
+                            $('#myTabs').tabs('update',{
+                                tab:$("#myTabs").tabs("getSelected"),
+                                options:{
+                                }
+                            })
+                        }
+                    }]
+                });
+            }
+        }
+    })
+
+    function createFrame(url){
+        return '<iframe src="'+url+'" frameborder="0" allowfullscreen="true" width="100%" height="100%"></iframe>'
+    }
+
+
+</script>
+</html>

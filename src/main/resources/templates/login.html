@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+
+    <link rel="stylesheet" href="jss/css/login.css">
+    <link rel="shortcut icon" type="image/icon" href="jss/images/jd.ico">
+
+
+</head>
+<body>
+<div class="up">
+
+    <div class="hy">
+        欢迎登录
+    </div>
+</div>
+<div class="middle">
+    <div class="login">
+        <div class="l1 ">
+            <div class="l1_font_01 ">硅谷会员</div>
+            <a class="l1_font_02 " href="<%=application.getContextPath() %>/to_regist.action">用户注册</a>
+        </div>
+        <div class="blank_01"></div>
+        <div class="ts" th:text="${session.msg}">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${err}
+        </div>
+        <div class="blank_01"></div>
+        <form action="/login" id="login_form" method="post">
+            <div class="input1">
+                <input th:value="${username}" type="text" class="input1_01" name="username"/>
+            </div>
+            <div class="blank_01"></div>
+            <div class="blank_01"></div>
+            <div class="input2">
+                <input th:value="${password}"  type="text" class="input1_01" name="password"/>
+            </div>
+
+            <div class="blank_01"></div>
+            <div class="blank_01"></div>
+            <div class="box_01">
+                <div class="box_01_both">
+                    <input th:checked="${password}==null?'false':'checked'"  class="box_01_both_1" type="checkbox" name="remPwd" value="1">记住密码</input>
+                    <div class="box_01_both_2">忘记密码？</div>
+                </div>
+            </div>
+            <div class="blank_01"></div>
+            <a href="#" class="aline">
+                <input type="submit" class="red_button" onclick="to_submit()">
+                登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录
+                </input>
+            </a>
+
+        </form>
+        <div class="blank_01"></div>
+        <div class="blank_01"></div>
+        <div class="box_down">
+            <div class="box_down_1">使用合作网站账号登录京东：</div>
+            <div class="box_down_1">京东钱包&nbsp;&nbsp;|&nbsp;&nbsp;QQ
+                &nbsp;&nbsp;|&nbsp;&nbsp;微信
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="down">
+    <br/>
+    Copyright©2004-2015 xu.jb.com 版权所有
+</div>
+</body>
+</html>
